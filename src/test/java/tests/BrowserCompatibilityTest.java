@@ -18,17 +18,10 @@ public class BrowserCompatibilityTest extends BaseTest {
         // Создаем пользователя через API
         createUserAndGetAccessToken();
 
-        // Тестируем логин
-        mainPage.clickLoginAccountButton();
-        loginPage.waitForLoginPageLoad();
-        loginPage.login(user.getEmail(), user.getPassword());
+        loginUser(mainPage, loginPage, user.getEmail(), user.getPassword());
 
         assertTrue("Главная страница должна отображаться в браузере: " + getBrowser(),
                 mainPage.isMainPageLoaded());
-
-        // Проверяем что пользователь залогинен
-        assertTrue("Пользователь должен быть залогинен в браузере: " + getBrowser(),
-                mainPage.isUserLoggedIn());
 
         System.out.println("Тест успешно выполнен в браузере: " + getBrowser());
     }

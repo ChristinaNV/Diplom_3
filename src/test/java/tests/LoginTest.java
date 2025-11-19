@@ -17,12 +17,7 @@ public class LoginTest extends BaseTest {
         // Создаем пользователя через API
         createUserAndGetAccessToken();
 
-        mainPage.clickLoginAccountButton();
-        loginPage.waitForLoginPageLoad();
-        loginPage.login(user.getEmail(), user.getPassword());
-
-        assertTrue("Главная страница должна отображаться после успешного логина",
-                mainPage.isMainPageLoaded());
+        loginUser(mainPage, loginPage, user.getEmail(), user.getPassword());
     }
 
     @Test
@@ -32,13 +27,10 @@ public class LoginTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
 
         createUserAndGetAccessToken();
-
-        mainPage.clickPersonalAccountButton();
-        loginPage.waitForLoginPageLoad();
+        navigateToLoginPageViaPersonalAccount(mainPage, loginPage);
         loginPage.login(user.getEmail(), user.getPassword());
 
-        assertTrue("Главная страница должна отображаться после успешного логина",
-                mainPage.isMainPageLoaded());
+        assertTrue("Пользователь должен быть залогинен", mainPage.isUserLoggedIn());
     }
 
     @Test
@@ -50,15 +42,13 @@ public class LoginTest extends BaseTest {
 
         createUserAndGetAccessToken();
 
-        mainPage.clickLoginAccountButton();
-        loginPage.waitForLoginPageLoad();
-        loginPage.clickRegisterLink();
+        navigateToRegistrationPage(mainPage, loginPage, registrationPage);
         registrationPage.clickLoginLink();
-        loginPage.waitForLoginPageLoad();
+
+        assertTrue("Страница логина должна отображаться", loginPage.isLoginPageDisplayed());
         loginPage.login(user.getEmail(), user.getPassword());
 
-        assertTrue("Главная страница должна отображаться после успешного логина",
-                mainPage.isMainPageLoaded());
+        assertTrue("Пользователь должен быть залогинен", mainPage.isUserLoggedIn());
     }
 
     @Test
@@ -70,14 +60,17 @@ public class LoginTest extends BaseTest {
 
         createUserAndGetAccessToken();
 
-        mainPage.clickPersonalAccountButton();
-        loginPage.waitForLoginPageLoad();
+        navigateToLoginPageViaPersonalAccount(mainPage, loginPage);
         loginPage.clickRecoverPasswordLink();
+
+        assertTrue("Страница восстановления пароля должна отображаться",
+                passwordRecoveryPage.isPasswordRecoveryPageDisplayed());
+
         passwordRecoveryPage.clickLoginLink();
-        loginPage.waitForLoginPageLoad();
+
+        assertTrue("Страница логина должна отображаться", loginPage.isLoginPageDisplayed());
         loginPage.login(user.getEmail(), user.getPassword());
 
-        assertTrue("Главная страница должна отображаться после успешного логина",
-                mainPage.isMainPageLoaded());
+        assertTrue("Пользователь должен быть залогинен", mainPage.isUserLoggedIn());
     }
 }

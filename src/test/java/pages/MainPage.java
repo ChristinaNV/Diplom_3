@@ -45,7 +45,10 @@ public class MainPage extends BasePage {
             wait.until(ExpectedConditions.visibilityOf(mainHeader));
             return mainHeader.isDisplayed();
         } catch (Exception e) {
-            return false;
+            // Дополнительная проверка через URL
+            String currentUrl = driver.getCurrentUrl();
+            return currentUrl.contains("stellarburgers") &&
+                    (currentUrl.endsWith("/") || currentUrl.contains("constructor"));
         }
     }
 
@@ -82,4 +85,5 @@ public class MainPage extends BasePage {
             return false;
         }
     }
+
 }

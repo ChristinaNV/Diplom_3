@@ -20,9 +20,7 @@ public class LogoutTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         ProfilePage profilePage = new ProfilePage(driver);
 
-        mainPage.clickLoginAccountButton();
-        loginPage.login(user.getEmail(), user.getPassword());
-        mainPage.clickPersonalAccountButton();
+        navigateToProfilePage(mainPage, loginPage, profilePage, user.getEmail(), user.getPassword());
         profilePage.clickLogoutButton();
 
         assertTrue("После выхода должна отображаться страница логина",

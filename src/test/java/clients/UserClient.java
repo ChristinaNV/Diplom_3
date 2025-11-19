@@ -44,4 +44,24 @@ public class UserClient {
         return response.then().extract().path("accessToken");
     }
 
+    @Step("Получаем информацию о пользователе")
+    public Response getUserInfo(String accessToken) {
+        return given()
+                .header("Authorization", accessToken)
+                .baseUri(BASE_URL)
+                .when()
+                .get("auth/user");
+    }
+
+    @Step("Обновляем информацию о пользователе")
+    public Response updateUserInfo(String accessToken, User user) {
+        return given()
+                .header("Authorization", accessToken)
+                .header("Content-type", "application/json")
+                .baseUri(BASE_URL)
+                .body(user)
+                .when()
+                .patch("auth/user");
+    }
+
 }

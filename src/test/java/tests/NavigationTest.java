@@ -20,12 +20,7 @@ public class NavigationTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         ProfilePage profilePage = new ProfilePage(driver);
 
-        mainPage.clickLoginAccountButton();
-        loginPage.login(user.getEmail(), user.getPassword());
-        mainPage.clickPersonalAccountButton();
-
-        assertTrue("Должна отображаться страница профиля",
-                profilePage.isProfilePageDisplayed());
+        navigateToProfilePage(mainPage, loginPage, profilePage, user.getEmail(), user.getPassword());
     }
 
     @Test
@@ -38,9 +33,7 @@ public class NavigationTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         ProfilePage profilePage = new ProfilePage(driver);
 
-        mainPage.clickLoginAccountButton();
-        loginPage.login(user.getEmail(), user.getPassword());
-        mainPage.clickPersonalAccountButton();
+        navigateToProfilePage(mainPage, loginPage, profilePage, user.getEmail(), user.getPassword());
         profilePage.clickConstructorLink();
 
         assertTrue("После клика на ссылку 'Конструктор' должна отображаться главная страница",
@@ -57,14 +50,10 @@ public class NavigationTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         ProfilePage profilePage = new ProfilePage(driver);
 
-        mainPage.clickLoginAccountButton();
-        loginPage.login(user.getEmail(), user.getPassword());
-        mainPage.clickPersonalAccountButton();
+        navigateToProfilePage(mainPage, loginPage, profilePage, user.getEmail(), user.getPassword());
         profilePage.clickLogo();
 
         assertTrue("После клика на логотип должна отображаться главная страница",
                 mainPage.isMainPageLoaded());
     }
-
-
 }
